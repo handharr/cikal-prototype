@@ -1,4 +1,8 @@
-@import "tailwindcss";
+/* Disable Tailwind's automatic source detection: it scans the whole project
+   tree and follows the `personal-workdocs` symlink (→ ../personal-workdocs),
+   which escapes the project root and panics Turbopack. We enumerate every
+   source explicitly below instead. */
+@import "tailwindcss" source(none);
 
 /* Scan the app's own source for utility classes. */
 @source "../";
