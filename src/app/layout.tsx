@@ -8,7 +8,7 @@ import "@handharr-labs/ui-base-silver/tokens/globals.css";
 import "@handharr-labs/ui-base-gold/tokens/globals.css";
 import "@/styles/brand-cikal.css";
 
-import { AppFrame } from "@/components/app-frame";
+import { AppFrame } from "@/components/organisms/app-frame";
 
 export const metadata: Metadata = {
   title: "Sekolah Cikal Amri Setu — Kompetisi Olahraga",
