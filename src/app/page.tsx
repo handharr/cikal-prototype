@@ -2,75 +2,88 @@
 
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
-import { SiteChrome } from "@/components/site-chrome";
-import { SPORTS, COMPETITIONS } from "@/lib/data";
+import { SiteChrome } from "@/components/organisms/site-chrome";
+import { InfoCard } from "@/components/molecules/info-card";
+import { CtaBand } from "@/components/molecules/cta-band";
+import { SPORTS } from "@/lib/data";
 
-export default function HomePage() {
+const STEPS = [
+  {
+    step: "1",
+    title: "Buat akun & verifikasi",
+    description: "Daftar dengan data diri dan foto identitas, lalu konfirmasi email untuk diverifikasi sekolah.",
+  },
+  {
+    step: "2",
+    title: "Pilih nomor kompetisi",
+    description: "Telusuri cabang olahraga dan daftar pada nomor yang sesuai usia dan kategorimu.",
+  },
+  {
+    step: "3",
+    title: "Bayar & pantau status",
+    description: "Transfer biaya pendaftaran, unggah bukti, dan pantau status pembayaranmu dari dasbor.",
+  },
+];
+
+export default function LandingPage() {
   const T = useTierComponents();
   const router = useRouter();
 
-  const activeCount = COMPETITIONS.filter((c) => c.status === "ACTIVE").length;
-
   return (
     <SiteChrome>
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-16">
         <T.HeroSection
-          headline="Kompetisi Olahraga Cikal Amri Setu"
-          subline="Temukan cabang olahraga, daftar secara online, dan pantau status pembayaranmu — semua dalam satu portal."
-          primaryCta={{
-            label: "Lihat Kompetisi",
-            onClick: () => router.push("/competitions"),
-          }}
-          secondaryCta={{
-            label: "Daftar Akun",
-            onClick: () => router.push("/register"),
-          }}
+          headline="Satu portal untuk semua kompetisi olahraga Cikal Amri Setu"
+          subline="Temukan cabang olahraga, daftar secara online, dan ikuti seluruh prosesnya dari satu tempat — tanpa formulir kertas atau konfirmasi manual."
+          primaryCta={{ label: "Daftar Akun", onClick: () => router.push("/register") }}
+          secondaryCta={{ label: "Masuk", onClick: () => router.push("/login") }}
         />
 
-        {/* Competition summary */}
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <T.StatCard label="Cabang Olahraga" value={SPORTS.length} description="Tersedia untuk diikuti" />
-          <T.StatCard label="Nomor Kompetisi" value={COMPETITIONS.length} description="Beragam kelompok usia" />
-          <T.StatCard
-            label="Pendaftaran Aktif"
-            value={activeCount}
-            deltaDirection="up"
-            delta="Buka sekarang"
-            description="Segera daftar sebelum ditutup"
-          />
-        </section>
-
-        {/* Sports shortlist */}
-        <section className="flex flex-col gap-5">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2 className="typo-section-title font-bold">Cabang Olahraga</h2>
-              <p className="text-[var(--muted-foreground)]">Pilih cabang untuk melihat nomor kompetisinya.</p>
-            </div>
-            <T.Button variant="outline" onClick={() => router.push("/competitions")}>
-              Semua Kompetisi
-            </T.Button>
+        {/* How it works */}
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <h2 className="typo-section-title font-bold">Cara Mengikuti</h2>
+            <p className="text-[var(--muted-foreground)]">Tiga langkah dari pendaftaran hingga konfirmasi pembayaran.</p>
           </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {SPORTS.map((sport) => (
-              <T.Card key={sport.id}>
-                <T.CardHeader>
-                  <T.CardTitle>{sport.name}</T.CardTitle>
-                  <T.CardDescription>{sport.description}</T.CardDescription>
-                </T.CardHeader>
-                <T.CardFooter className="justify-between">
-                  <span className="typo-label text-[var(--muted-foreground)]">
-                    {sport.eventCount} nomor
-                  </span>
-                  <T.Button size="sm" variant="ghost" onClick={() => router.push("/competitions")}>
-                    Lihat
-                  </T.Button>
-                </T.CardFooter>
-              </T.Card>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {STEPS.map((s) => (
+              <InfoCard
+                key={s.step}
+                eyebrow={`Langkah ${s.step}`}
+                eyebrowTone="primary"
+                title={s.title}
+                description={s.description}
+              />
             ))}
           </div>
         </section>
+
+        {/* Sports overview — informational only */}
+        <section className="flex flex-col gap-5">
+          <div className="flex flex-col gap-1">
+            <h2 className="typo-section-title font-bold">Cabang Olahraga</h2>
+            <p className="text-[var(--muted-foreground)]">
+              Beragam cabang olahraga dengan nomor kompetisi untuk berbagai kelompok usia.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {SPORTS.map((sport) => (
+              <InfoCard
+                key={sport.id}
+                eyebrow={`${sport.eventCount} nomor kompetisi`}
+                title={sport.name}
+                description={sport.description}
+              />
+            ))}
+          </div>
+        </section>
+
+        <CtaBand
+          title="Siap mengikuti kompetisi?"
+          description="Buat akun sekarang dan amankan tempatmu sebelum pendaftaran ditutup."
+          primary={{ label: "Daftar Akun", onClick: () => router.push("/register") }}
+          secondary={{ label: "Masuk", onClick: () => router.push("/login") }}
+        />
       </div>
     </SiteChrome>
   );

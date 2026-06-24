@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
-import { SiteChrome } from "@/components/site-chrome";
+import { SiteChrome } from "@/components/organisms/site-chrome";
 
 export default function LoginPage() {
   const T = useTierComponents();
@@ -23,7 +23,7 @@ export default function LoginPage() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              router.push("/dashboard");
+              router.push("/home");
             }}
           >
             <T.CardContent className="flex flex-col gap-4">

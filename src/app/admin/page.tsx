@@ -2,43 +2,53 @@
 
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
+import { AdminChrome } from "@/components/organisms/admin-chrome";
+import { PageHeader } from "@/components/molecules/page-header";
 import { SPORTS, COMPETITIONS } from "@/lib/data";
 
 /**
- * Backoffice stub (ADM-01). Layout placeholder only — charts, tables, and the
- * reconciliation/participant-management surfaces from the PRD are not built yet.
+ * Backoffice stub (ADM-01). Metric cards are placeholder; the dashboard charts
+ * are not built yet. Payment reconciliation (ADM-07) lives at
+ * /admin/reconciliation.
  */
 export default function AdminDashboardPage() {
   const T = useTierComponents();
   const router = useRouter();
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
-      <header className="mb-6 flex items-center justify-between gap-4">
-        <div>
-          <h1 className="typo-section-title font-bold">Dashboard Admin</h1>
-          <p className="text-[var(--muted-foreground)]">Ringkasan partisipasi kompetisi.</p>
-        </div>
-        <T.Button variant="outline" onClick={() => router.push("/")}>
-          Ke Situs Publik
-        </T.Button>
-      </header>
+    <AdminChrome>
+      <div className="flex flex-col gap-6">
+        <PageHeader title="Dashboard Admin" description="Ringkasan partisipasi kompetisi." />
 
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <T.StatCard label="Cabang Olahraga" value={SPORTS.length} />
-        <T.StatCard label="Nomor Kompetisi" value={COMPETITIONS.length} />
-        <T.StatCard label="Total Peserta" value={128} delta="+12" deltaDirection="up" />
-      </section>
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <T.StatCard label="Cabang Olahraga" value={SPORTS.length} />
+          <T.StatCard label="Nomor Kompetisi" value={COMPETITIONS.length} />
+          <T.StatCard label="Total Peserta" value={128} delta="+12" deltaDirection="up" />
+        </section>
 
-      <T.Card className="mt-6">
-        <T.CardHeader>
-          <T.CardTitle>Belum dibuat</T.CardTitle>
-          <T.CardDescription>
-            Grafik (Top-5 sport, distribusi usia, gender) dan tabel rekonsiliasi
-            pembayaran menyusul. Halaman ini baru kerangka.
-          </T.CardDescription>
-        </T.CardHeader>
-      </T.Card>
-    </div>
+        <T.Card>
+          <T.CardHeader>
+            <T.CardTitle>Rekonsiliasi Pembayaran</T.CardTitle>
+            <T.CardDescription>
+              Tinjau pendaftaran, periksa bukti, dan verifikasi pembayaran peserta.
+            </T.CardDescription>
+          </T.CardHeader>
+          <T.CardFooter>
+            <T.Button onClick={() => router.push("/admin/reconciliation")}>
+              Buka Rekonsiliasi
+            </T.Button>
+          </T.CardFooter>
+        </T.Card>
+
+        <T.Card>
+          <T.CardHeader>
+            <T.CardTitle>Grafik menyusul</T.CardTitle>
+            <T.CardDescription>
+              Top-5 cabang, distribusi usia, dan gender (ADM-01) belum dibuat — halaman ini baru kerangka.
+            </T.CardDescription>
+          </T.CardHeader>
+        </T.Card>
+      </div>
+    </AdminChrome>
   );
 }

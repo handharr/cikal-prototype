@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
-import { SiteChrome } from "@/components/site-chrome";
+import { SiteChrome } from "@/components/organisms/site-chrome";
+import { NativeSelect } from "@/components/atoms/native-select";
 
 export default function RegisterPage() {
   const T = useTierComponents();
@@ -43,15 +44,11 @@ export default function RegisterPage() {
                 <T.Input id="email" type="email" placeholder="nama@email.com" />
               </T.Field>
               <T.Field label="Jenis Kelamin" htmlFor="gender" required>
-                <select
-                  id="gender"
-                  className="h-9 w-full rounded-md border border-[var(--input)] bg-[var(--background)] px-3 text-sm"
-                  defaultValue=""
-                >
+                <NativeSelect id="gender" className="w-full" defaultValue="">
                   <option value="" disabled>Pilih…</option>
                   <option value="putra">Putra</option>
                   <option value="putri">Putri</option>
-                </select>
+                </NativeSelect>
               </T.Field>
               <T.Field label="Foto Identitas" htmlFor="photo" description="JPEG/PNG/WEBP, maks 5 MB" required>
                 <T.Input id="photo" type="file" accept="image/png,image/jpeg,image/webp" />
