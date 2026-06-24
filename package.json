@@ -1,0 +1,32 @@
+{
+  "name": "cikal-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sekolah Cikal Amri Setu — Competition Showcase & Registration prototype (UI + routing only, tier-switchable Bronze/Silver/Gold)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@handharr-labs/ui-base-bronze": "0.6.0",
+    "@handharr-labs/ui-base-silver": "0.6.0",
+    "@handharr-labs/ui-base-gold": "0.6.0",
+    "@handharr-labs/ui-tier-runtime": "0.1.0",
+    "next": "16.2.9",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "typescript": "6.0.3",
+    "tailwindcss": "4.3.1",
+    "@tailwindcss/postcss": "4.3.1",
+    "eslint": "10.5.0",
+    "eslint-config-next": "16.2.9"
+  }
+}

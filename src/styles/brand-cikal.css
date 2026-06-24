@@ -1,0 +1,42 @@
+/* CIKAL brand tokens — scoped to .brand-cikal */
+/*
+  Copied from @handharr-labs/ui-cikal-showcase (which is private/unpublished).
+  Pre-deal: tokens live here in the app. Post-deal, graduate into a real
+  @handharr-labs/ui-cikal brand package on the single chosen tier.
+
+  Palette: amber primary, navy foreground, purple secondary, orange accent.
+  Sets the 3 color knobs; overrides multi-hue tokens that can't derive from --hue alone.
+*/
+
+.brand-cikal {
+  /* Color knobs */
+  --hue: 68;
+  --primary-l: 0.77;
+  --primary-c: 0.16;
+
+  /* Multi-hue overrides — CIKAL uses distinct hues for secondary/accent */
+  --foreground: oklch(0.22 0.07 258);
+  --card-foreground: oklch(0.22 0.07 258);
+  --popover-foreground: oklch(0.22 0.07 258);
+  --secondary: oklch(0.65 0.08 295);
+  --secondary-foreground: oklch(1 0 0);
+  --accent: oklch(0.63 0.17 44);
+  --accent-foreground: oklch(1 0 0);
+
+  /* Gradient — stays in warm amber range rather than the tier's +20deg hue shift */
+  --primary-gradient-from: oklch(0.82 0.16 68);
+  --primary-gradient-to: oklch(0.68 0.18 64);
+
+  /* Sidebar overrides */
+  --sidebar-primary: oklch(0.77 0.16 68);
+  --sidebar-primary-foreground: oklch(0.22 0.07 258);
+  --sidebar-accent: oklch(0.65 0.08 295);
+  --sidebar-accent-foreground: oklch(1 0 0);
+
+  /* Chart tokens — full CIKAL palette */
+  --chart-1: oklch(0.77 0.16 68);
+  --chart-2: oklch(0.22 0.07 258);
+  --chart-3: oklch(0.65 0.08 295);
+  --chart-4: oklch(0.63 0.17 44);
+  --chart-5: oklch(0.55 0.14 155);
+}

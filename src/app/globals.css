@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Scan the app's own source for utility classes. */
+@source "../";
+
+/* The design-system packages live in node_modules and ship raw TSX. Tailwind v4
+   ignores node_modules during auto-detection, so point it at each tier's source
+   explicitly — otherwise classes used only inside the packages get purged. */
+@source "../../node_modules/@handharr-labs/ui-base-bronze/src";
+@source "../../node_modules/@handharr-labs/ui-base-silver/src";
+@source "../../node_modules/@handharr-labs/ui-base-gold/src";
+@source "../../node_modules/@handharr-labs/ui-tier-runtime/src";
