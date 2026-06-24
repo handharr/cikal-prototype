@@ -16,6 +16,18 @@ npm run dev
 
 `.npmrc` points `@handharr-labs` at `https://npm.pkg.github.com` and reads `NODE_AUTH_TOKEN`.
 
+## Deployment (GitHub Pages)
+
+`.github/workflows/deploy.yml` builds a static export (`output: "export"`) and publishes it to GitHub Pages on every push to `main`. `actions/configure-pages` injects the project base path (`/cikal-prototype`) via `NEXT_BASE_PATH`.
+
+**Required secret — `GH_PACKAGES_TOKEN`:** this repo (`handharr/*`) installs packages from the `handharr-labs` org's GitHub Packages registry. That's a different owner, so the default `GITHUB_TOKEN` cannot read them. Add a classic PAT with `read:packages` (from an account with access to the `handharr-labs` packages):
+
+```bash
+gh secret set GH_PACKAGES_TOKEN --repo handharr/cikal-prototype   # paste the PAT when prompted
+```
+
+Pages source must be set to **GitHub Actions** (Settings → Pages). Site URL: `https://handharr.github.io/cikal-prototype/`.
+
 ## Design system
 
 | Package | Version |

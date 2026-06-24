@@ -4,18 +4,23 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 
+// The design system's NavBar/Footer render plain <a> anchors, which (unlike
+// next/navigation) are not auto-prefixed with the Pages basePath. Prefix here.
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const withBase = (href: string) => `${BASE}${href}`;
+
 const NAV_LINKS = [
-  { label: "Beranda", href: "/" },
-  { label: "Kompetisi", href: "/competitions" },
-  { label: "Tentang", href: "/about" },
-  { label: "Kontak", href: "/contact" },
+  { label: "Beranda", href: withBase("/") },
+  { label: "Kompetisi", href: withBase("/competitions") },
+  { label: "Tentang", href: withBase("/about") },
+  { label: "Kontak", href: withBase("/contact") },
 ];
 
 const FOOTER_LINKS = [
-  { label: "Kompetisi", href: "/competitions" },
-  { label: "Daftar", href: "/register" },
-  { label: "Masuk", href: "/login" },
-  { label: "Tentang", href: "/about" },
+  { label: "Kompetisi", href: withBase("/competitions") },
+  { label: "Daftar", href: withBase("/register") },
+  { label: "Masuk", href: withBase("/login") },
+  { label: "Tentang", href: withBase("/about") },
 ];
 
 /**
