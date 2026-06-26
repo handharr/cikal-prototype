@@ -5,6 +5,7 @@ import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
 import { EventStatusBadge } from "@/components/atoms/status-badges";
 import { CompetitionFormModal } from "@/components/molecules/competition-form-modal";
+import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   COMPETITIONS,
   SPORTS,
@@ -74,8 +75,6 @@ export default function AdminCompetitionsPage() {
     setNotice(`"${name}" dihapus.`);
   }
 
-  const hasFilters = search !== "" || sport !== "" || status !== "";
-
   return (
     <AdminChrome>
       <div className="flex flex-col gap-6">
@@ -85,38 +84,32 @@ export default function AdminCompetitionsPage() {
           action={<T.Button onClick={() => setCreating(true)}>Tambah Kompetisi</T.Button>}
         />
 
-        {/* Search + filters */}
-        <div className="flex flex-wrap items-center gap-3">
-          <T.SearchBar
-            value={search}
-            onChange={setSearch}
-            placeholder="Cari nomor kompetisi…"
-            className="w-full sm:w-72"
-          />
-          <T.FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
-          <T.FilterSelect
-            value={status}
-            onChange={(v) => setStatus(v as "" | EventStatus)}
-            allLabel="Semua Status"
-            options={STATUS_OPTIONS}
-          />
-          {hasFilters && (
-            <button
-              type="button"
-              className="typo-label text-[var(--primary)] hover:underline"
-              onClick={() => {
-                setSearch("");
-                setSport("");
-                setStatus("");
-              }}
-            >
-              Reset
-            </button>
-          )}
-          <span className="typo-label ml-auto text-[var(--muted-foreground)]">
-            {filtered.length} kompetisi
-          </span>
-        </div>
+        <FilterBar
+          search={{
+            value: search,
+            onChange: setSearch,
+            placeholder: "Cari nomor kompetisi…",
+          }}
+          filters={[
+            { value: sport, onChange: setSport, allLabel: "Semua Cabang", options: SPORT_OPTIONS },
+            {
+              value: status,
+              onChange: (v) => setStatus(v as "" | EventStatus),
+              allLabel: "Semua Status",
+              options: STATUS_OPTIONS,
+            },
+          ]}
+          onReset={() => {
+            setSearch("");
+            setSport("");
+            setStatus("");
+          }}
+          trailing={
+            <span className="typo-label text-[var(--muted-foreground)]">
+              {filtered.length} kompetisi
+            </span>
+          }
+        />
 
         {notice && <T.Notice>{notice}</T.Notice>}
 

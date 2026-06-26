@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
+import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   COMPETITIONS,
   STATUS_LABEL,
@@ -67,8 +68,6 @@ export default function CompetitionsPage() {
       : {}),
   }));
 
-  const hasFilters = search !== "" || sport !== "" || status !== "";
-
   return (
     <AppChrome>
       <div className="flex flex-col gap-6">
@@ -77,41 +76,33 @@ export default function CompetitionsPage() {
           description="Semua cabang dan nomor kompetisi beserta status, biaya, dan batas pendaftaran."
         />
 
-        {/* Search + filters */}
-        <div className="flex flex-wrap items-center gap-3">
-          <T.SearchBar
-            value={search}
-            onChange={resetTo(setSearch)}
-            placeholder="Cari kompetisi atau cabang…"
-            className="w-full sm:w-72"
-          />
-          <T.FilterSelect
-            value={sport}
-            onChange={resetTo(setSport)}
-            allLabel="Semua Cabang"
-            options={SPORT_OPTIONS}
-          />
-          <T.FilterSelect
-            value={status}
-            onChange={(v) => resetTo(setStatus)(v as "" | EventStatus)}
-            allLabel="Semua Status"
-            options={STATUS_OPTIONS}
-          />
-          {hasFilters && (
-            <button
-              type="button"
-              className="typo-label text-[var(--primary)] hover:underline"
-              onClick={() => {
-                setSearch("");
-                setSport("");
-                setStatus("");
-                setPage(1);
-              }}
-            >
-              Reset
-            </button>
-          )}
-        </div>
+        <FilterBar
+          search={{
+            value: search,
+            onChange: resetTo(setSearch),
+            placeholder: "Cari kompetisi atau cabang…",
+          }}
+          filters={[
+            {
+              value: sport,
+              onChange: resetTo(setSport),
+              allLabel: "Semua Cabang",
+              options: SPORT_OPTIONS,
+            },
+            {
+              value: status,
+              onChange: (v) => resetTo(setStatus)(v as "" | EventStatus),
+              allLabel: "Semua Status",
+              options: STATUS_OPTIONS,
+            },
+          ]}
+          onReset={() => {
+            setSearch("");
+            setSport("");
+            setStatus("");
+            setPage(1);
+          }}
+        />
 
         <p className="typo-label text-[var(--muted-foreground)]">
           {filtered.length === 0
