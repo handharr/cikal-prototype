@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
-import { NativeSelect } from "@/components/atoms/native-select";
 import {
   STATUS_LABEL,
   type CompetitionEvent,
@@ -59,29 +58,12 @@ export function CompetitionFormModal({
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      onClick={onClose}
+    <T.Modal
+      title={event ? "Ubah Kompetisi" : "Tambah Kompetisi"}
+      size="md"
+      closeLabel="Tutup"
+      onClose={onClose}
     >
-      <div
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[var(--radius)] bg-[var(--background)] p-5 shadow-lg"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-      >
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <span className="typo-card-title font-bold">
-            {event ? "Ubah Kompetisi" : "Tambah Kompetisi"}
-          </span>
-          <button
-            type="button"
-            className="typo-label text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-            onClick={onClose}
-          >
-            Tutup
-          </button>
-        </div>
-
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <T.Field label="Nama Nomor Kompetisi" htmlFor="name" required>
             <T.Input
@@ -105,7 +87,7 @@ export function CompetitionFormModal({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <T.Field label="Cabang Olahraga" htmlFor="sport" required>
-              <NativeSelect
+              <T.NativeSelect
                 id="sport"
                 className="w-full"
                 value={draft.sport}
@@ -116,7 +98,7 @@ export function CompetitionFormModal({
                     {s}
                   </option>
                 ))}
-              </NativeSelect>
+              </T.NativeSelect>
             </T.Field>
 
             <T.Field label="Biaya (Rupiah)" htmlFor="fee" required>
@@ -150,7 +132,7 @@ export function CompetitionFormModal({
             </T.Field>
 
             <T.Field label="Gender" htmlFor="gender" required>
-              <NativeSelect
+              <T.NativeSelect
                 id="gender"
                 className="w-full"
                 value={draft.gender}
@@ -161,11 +143,11 @@ export function CompetitionFormModal({
                     {g}
                   </option>
                 ))}
-              </NativeSelect>
+              </T.NativeSelect>
             </T.Field>
 
             <T.Field label="Status" htmlFor="status" required>
-              <NativeSelect
+              <T.NativeSelect
                 id="status"
                 className="w-full"
                 value={draft.status}
@@ -176,7 +158,7 @@ export function CompetitionFormModal({
                     {STATUS_LABEL[st]}
                   </option>
                 ))}
-              </NativeSelect>
+              </T.NativeSelect>
             </T.Field>
 
             <T.Field label="Batas Pendaftaran" htmlFor="closingDate" required className="sm:col-span-2">
@@ -196,7 +178,6 @@ export function CompetitionFormModal({
             <T.Button type="submit">{event ? "Simpan Perubahan" : "Tambah"}</T.Button>
           </div>
         </form>
-      </div>
-    </div>
+    </T.Modal>
   );
 }

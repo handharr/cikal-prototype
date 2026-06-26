@@ -3,11 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { Notice } from "@/components/atoms/notice";
 import { AccountStatusBadge } from "@/components/atoms/status-badges";
 import { RegistrationRow } from "@/components/molecules/registration-row";
-import { EmptyState } from "@/components/molecules/empty-state";
 import { ACCOUNT, MY_REGISTRATIONS } from "@/lib/data";
 
 export default function ParticipantHomePage() {
@@ -20,19 +17,19 @@ export default function ParticipantHomePage() {
   return (
     <AppChrome>
       <div className="flex flex-col gap-8">
-        <PageHeader
+        <T.PageHeader
           title={`Halo, ${ACCOUNT.name}`}
           description="Kelola pendaftaran kompetisimu di sini."
           action={<AccountStatusBadge status={ACCOUNT.status} />}
         />
 
         {unpaidCount > 0 && (
-          <Notice>
+          <T.Notice>
             <span className="font-medium">Perlu tindakan:</span>
             <span className="text-[var(--muted-foreground)]">
               {unpaidCount} pembayaran belum diselesaikan.
             </span>
-          </Notice>
+          </T.Notice>
         )}
 
         <section className="flex flex-col gap-4">
@@ -54,7 +51,7 @@ export default function ParticipantHomePage() {
               ))}
             </div>
           ) : (
-            <EmptyState
+            <T.EmptyState
               title="Belum ada pendaftaran"
               description="Kamu belum mendaftar kompetisi apa pun. Jelajahi kompetisi yang tersedia untuk memulai."
               action={

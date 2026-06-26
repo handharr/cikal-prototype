@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
 import { EventStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
 import { SPORTS, COMPETITIONS, ALL_REGISTRATIONS, formatRupiah } from "@/lib/data";
 
@@ -23,7 +22,7 @@ export default function AdminDashboardPage() {
   return (
     <AdminChrome>
       <div className="flex flex-col gap-6">
-        <PageHeader title="Dashboard Admin" description="Ringkasan partisipasi kompetisi." />
+        <T.PageHeader title="Dashboard Admin" description="Ringkasan partisipasi kompetisi." />
 
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <T.StatCard label="Cabang Olahraga" value={SPORTS.length} />

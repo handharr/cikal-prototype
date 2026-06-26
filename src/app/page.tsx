@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
-import { InfoCard } from "@/components/molecules/info-card";
-import { CtaBand } from "@/components/molecules/cta-band";
 import { SPORTS } from "@/lib/data";
 
 const STEPS = [
@@ -47,7 +45,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {STEPS.map((s) => (
-              <InfoCard
+              <T.InfoCard
                 key={s.step}
                 eyebrow={`Langkah ${s.step}`}
                 eyebrowTone="primary"
@@ -68,7 +66,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {SPORTS.map((sport) => (
-              <InfoCard
+              <T.InfoCard
                 key={sport.id}
                 eyebrow={`${sport.eventCount} nomor kompetisi`}
                 title={sport.name}
@@ -78,7 +76,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <CtaBand
+        <T.CtaBand
           title="Siap mengikuti kompetisi?"
           description="Buat akun sekarang dan amankan tempatmu sebelum pendaftaran ditutup."
           primary={{ label: "Daftar Akun", onClick: () => router.push("/register") }}

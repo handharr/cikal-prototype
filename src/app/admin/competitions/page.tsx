@@ -3,12 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { Notice } from "@/components/atoms/notice";
-import { FilterSelect } from "@/components/molecules/filter-select";
 import { EventStatusBadge } from "@/components/atoms/status-badges";
 import { CompetitionFormModal } from "@/components/molecules/competition-form-modal";
-import { ConfirmDialog } from "@/components/molecules/confirm-dialog";
 import {
   COMPETITIONS,
   SPORTS,
@@ -83,7 +79,7 @@ export default function AdminCompetitionsPage() {
   return (
     <AdminChrome>
       <div className="flex flex-col gap-6">
-        <PageHeader
+        <T.PageHeader
           title="Kelola Kompetisi"
           description="Tambah, ubah, atau hapus nomor kompetisi beserta biaya, kelompok usia, dan jadwal."
           action={<T.Button onClick={() => setCreating(true)}>Tambah Kompetisi</T.Button>}
@@ -97,8 +93,8 @@ export default function AdminCompetitionsPage() {
             placeholder="Cari nomor kompetisi…"
             className="w-full sm:w-72"
           />
-          <FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
-          <FilterSelect
+          <T.FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
+          <T.FilterSelect
             value={status}
             onChange={(v) => setStatus(v as "" | EventStatus)}
             allLabel="Semua Status"
@@ -122,7 +118,7 @@ export default function AdminCompetitionsPage() {
           </span>
         </div>
 
-        {notice && <Notice>{notice}</Notice>}
+        {notice && <T.Notice>{notice}</T.Notice>}
 
         {/* Table */}
         <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--border)]">
@@ -204,7 +200,7 @@ export default function AdminCompetitionsPage() {
       )}
 
       {deleting && (
-        <ConfirmDialog
+        <T.ConfirmDialog
           title="Hapus kompetisi?"
           message={
             <>
@@ -212,6 +208,8 @@ export default function AdminCompetitionsPage() {
               dihapus dari daftar. Tindakan ini tidak dapat dibatalkan.
             </>
           }
+          confirmLabel="Hapus"
+          cancelLabel="Batal"
           onConfirm={handleDelete}
           onClose={() => setDeleting(null)}
         />

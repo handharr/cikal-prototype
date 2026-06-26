@@ -4,10 +4,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { DetailRow } from "@/components/atoms/detail-row";
 import { EventStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
-import { FileDropzone } from "@/components/molecules/file-dropzone";
 import { COMPETITIONS, BANK, formatRupiah } from "@/lib/data";
 
 function CheckoutInner() {
@@ -48,7 +45,7 @@ function CheckoutInner() {
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
-      <PageHeader
+      <T.PageHeader
         title="Pembayaran"
         description="Selesaikan pembayaran untuk mengonfirmasi pendaftaranmu."
       />
@@ -67,7 +64,7 @@ function CheckoutInner() {
           </div>
         </T.CardHeader>
         <T.CardContent>
-          <DetailRow
+          <T.DetailRow
             className="border-t border-[var(--border)] pt-4"
             label="Total pembayaran"
             value={formatRupiah(event.feeRupiah)}
@@ -85,9 +82,9 @@ function CheckoutInner() {
           </T.CardDescription>
         </T.CardHeader>
         <T.CardContent className="flex flex-col gap-3">
-          <DetailRow label="Bank" value={BANK.name} />
-          <DetailRow label="Nomor Rekening" value={BANK.accountNumber} valueClassName="font-mono" />
-          <DetailRow label="Atas Nama" value={BANK.accountHolder} />
+          <T.DetailRow label="Bank" value={BANK.name} />
+          <T.DetailRow label="Nomor Rekening" value={BANK.accountNumber} valueClassName="font-mono" />
+          <T.DetailRow label="Atas Nama" value={BANK.accountHolder} />
         </T.CardContent>
       </T.Card>
 
@@ -104,12 +101,13 @@ function CheckoutInner() {
             <T.CardDescription>JPEG/PNG/WEBP, maks 5 MB.</T.CardDescription>
           </T.CardHeader>
           <T.CardContent className="pt-2 pb-6">
-            <FileDropzone
+            <T.FileDropzone
               label="Pilih file bukti transfer"
               hint="JPEG/PNG/WEBP, maks 5 MB"
               accept="image/png,image/jpeg,image/webp"
               fileName={fileName}
               onFileChange={setFileName}
+              removeLabel="Hapus"
             />
           </T.CardContent>
           <T.CardFooter className="flex-col items-stretch gap-3">

@@ -4,9 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { FilterSelect } from "@/components/molecules/filter-select";
-import { Pagination } from "@/components/molecules/pagination";
 import {
   COMPETITIONS,
   STATUS_LABEL,
@@ -75,7 +72,7 @@ export default function CompetitionsPage() {
   return (
     <AppChrome>
       <div className="flex flex-col gap-6">
-        <PageHeader
+        <T.PageHeader
           title="Daftar Kompetisi"
           description="Semua cabang dan nomor kompetisi beserta status, biaya, dan batas pendaftaran."
         />
@@ -88,13 +85,13 @@ export default function CompetitionsPage() {
             placeholder="Cari kompetisi atau cabang…"
             className="w-full sm:w-72"
           />
-          <FilterSelect
+          <T.FilterSelect
             value={sport}
             onChange={resetTo(setSport)}
             allLabel="Semua Cabang"
             options={SPORT_OPTIONS}
           />
-          <FilterSelect
+          <T.FilterSelect
             value={status}
             onChange={(v) => resetTo(setStatus)(v as "" | EventStatus)}
             allLabel="Semua Status"
@@ -124,7 +121,13 @@ export default function CompetitionsPage() {
 
         <T.EventGrid items={items} emptyMessage="Tidak ada kompetisi yang cocok." />
 
-        <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} />
+        <T.Pagination
+          page={currentPage}
+          pageCount={pageCount}
+          onPageChange={setPage}
+          previousLabel="Sebelumnya"
+          nextLabel="Berikutnya"
+        />
       </div>
     </AppChrome>
   );

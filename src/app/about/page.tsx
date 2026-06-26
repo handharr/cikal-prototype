@@ -1,9 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
-import { InfoCard } from "@/components/molecules/info-card";
-import { CtaBand } from "@/components/molecules/cta-band";
 
 const HIGHLIGHTS = [
   {
@@ -21,6 +20,7 @@ const HIGHLIGHTS = [
 ];
 
 export default function AboutPage() {
+  const T = useTierComponents();
   const router = useRouter();
 
   return (
@@ -40,7 +40,7 @@ export default function AboutPage() {
         {/* Highlights */}
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {HIGHLIGHTS.map((h) => (
-            <InfoCard key={h.title} title={h.title} description={h.description} />
+            <T.InfoCard key={h.title} title={h.title} description={h.description} />
           ))}
         </section>
 
@@ -64,7 +64,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <CtaBand
+        <T.CtaBand
           title="Ingin ikut berkompetisi?"
           description="Buat akun peserta untuk mulai mendaftar kompetisi yang kamu minati."
           primary={{ label: "Daftar Akun", onClick: () => router.push("/register") }}

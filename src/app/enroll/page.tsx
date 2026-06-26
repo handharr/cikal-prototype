@@ -4,10 +4,7 @@ import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { DetailRow } from "@/components/atoms/detail-row";
 import { EventStatusBadge } from "@/components/atoms/status-badges";
-import { NativeSelect } from "@/components/atoms/native-select";
 import { COMPETITIONS, ACCOUNT, formatRupiah } from "@/lib/data";
 
 function EnrollInner() {
@@ -23,7 +20,7 @@ function EnrollInner() {
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
-      <PageHeader
+      <T.PageHeader
         title="Pendaftaran Kompetisi"
         description="Periksa data dirimu sebelum melanjutkan ke pembayaran."
       />
@@ -40,9 +37,9 @@ function EnrollInner() {
           </div>
         </T.CardHeader>
         <T.CardContent className="flex flex-col gap-2">
-          <DetailRow label="Persyaratan usia" value={`${event.ageMin}–${event.ageMax} tahun`} />
-          <DetailRow label="Kategori" value={event.gender} />
-          <DetailRow label="Biaya pendaftaran" value={formatRupiah(event.feeRupiah)} />
+          <T.DetailRow label="Persyaratan usia" value={`${event.ageMin}–${event.ageMax} tahun`} />
+          <T.DetailRow label="Kategori" value={event.gender} />
+          <T.DetailRow label="Biaya pendaftaran" value={formatRupiah(event.feeRupiah)} />
         </T.CardContent>
       </T.Card>
 
@@ -74,10 +71,10 @@ function EnrollInner() {
               <T.Input id="phone" type="tel" defaultValue={ACCOUNT.phone} />
             </T.Field>
             <T.Field label="Jenis Kelamin" htmlFor="gender" required>
-              <NativeSelect id="gender" className="w-full" defaultValue={ACCOUNT.gender}>
+              <T.NativeSelect id="gender" className="w-full" defaultValue={ACCOUNT.gender}>
                 <option value="Putra">Putra</option>
                 <option value="Putri">Putri</option>
-              </NativeSelect>
+              </T.NativeSelect>
             </T.Field>
             <p className="sm:col-span-2 typo-label text-[var(--muted-foreground)]">
               Foto identitas diambil dari akunmu yang telah terverifikasi.

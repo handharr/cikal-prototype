@@ -3,9 +3,6 @@
 import { useMemo, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { PageHeader } from "@/components/molecules/page-header";
-import { Notice } from "@/components/atoms/notice";
-import { FilterSelect } from "@/components/molecules/filter-select";
 import { PaymentStatusBadge } from "@/components/atoms/status-badges";
 import { ProofPreviewModal } from "@/components/molecules/proof-preview-modal";
 import {
@@ -94,7 +91,7 @@ export default function ReconciliationPage() {
   return (
     <AdminChrome>
       <div className="flex flex-col gap-6">
-        <PageHeader
+        <T.PageHeader
           title="Rekonsiliasi Pembayaran"
           description="Tinjau pendaftaran, periksa bukti pembayaran, lalu verifikasi atau batalkan verifikasi."
         />
@@ -107,9 +104,9 @@ export default function ReconciliationPage() {
             placeholder="Cari nama peserta…"
             className="w-full sm:w-64"
           />
-          <FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
-          <FilterSelect value={event} onChange={setEvent} allLabel="Semua Nomor" options={EVENT_OPTIONS} />
-          <FilterSelect
+          <T.FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
+          <T.FilterSelect value={event} onChange={setEvent} allLabel="Semua Nomor" options={EVENT_OPTIONS} />
+          <T.FilterSelect
             value={status}
             onChange={(v) => setStatus(v as "" | PaymentStatus)}
             allLabel="Semua Status"
@@ -139,7 +136,7 @@ export default function ReconciliationPage() {
           </span>
         </div>
 
-        {notice && <Notice>{notice}</Notice>}
+        {notice && <T.Notice>{notice}</T.Notice>}
 
         {/* Table */}
         <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--border)]">
