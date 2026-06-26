@@ -41,6 +41,13 @@ npm run type-check   # tsc --noEmit
 npm run build        # static export → out/
 ```
 
+### Local design-system source (`../forgekit`)
+
+`postinstall` runs `scripts/link-local-design-system.mjs`: if a sibling `../forgekit` checkout exists, it symlinks the four `@handharr-labs` packages into `node_modules` so the app builds against **local source** (incl. changes not yet published). On CI / hosting the sibling is absent, so the **registry** versions pinned in `package.json` are used — `package.json`/lockfile are never edited, so `npm ci` stays reproducible. `next.config.ts` points Turbopack's `root` at the workspace only when the sibling is present, so the out-of-tree symlink targets resolve.
+
+- Re-sync after editing forgekit: `npm run link:local` (symlinks are live, but a fresh `npm install` re-creates them).
+- Force the registry locally: `USE_LOCAL_FORGEKIT=0 npm ci`.
+
 ## Deployment
 
 Pushes to `main` auto-deploy to GitHub Pages via `.github/workflows/deploy.yml` (static export, base path injected by `actions/configure-pages`). Live: https://handharr.github.io/cikal-prototype/. CI installs packages using the `GH_PACKAGES_TOKEN` repo secret (cross-org: this repo is `handharr/*`, packages are `handharr-labs/*`).
