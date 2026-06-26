@@ -4,8 +4,6 @@ import { useMemo, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
 import { PaymentStatusBadge } from "@/components/atoms/status-badges";
-import { PreviewModal } from "@/components/molecules/preview-modal";
-import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   ALL_REGISTRATIONS,
   PAYMENT_LABEL,
@@ -97,7 +95,7 @@ export default function ReconciliationPage() {
           description="Tinjau pendaftaran, periksa bukti pembayaran, lalu verifikasi atau batalkan verifikasi."
         />
 
-        <FilterBar
+        <T.FilterBar
           search={{
             value: search,
             onChange: setSearch,
@@ -220,15 +218,16 @@ export default function ReconciliationPage() {
       </div>
 
       {preview && (
-        <PreviewModal
+        <T.PreviewModal
           title="Bukti Pembayaran"
           caption="Pratinjau bukti transfer"
+          closeLabel="Tutup"
           onClose={() => setPreview(null)}
         >
           <span className="font-medium">{preview.participantName}</span>
           <span className="typo-card-title font-bold">{formatRupiah(preview.amountRupiah)}</span>
           <span className="typo-label text-[var(--muted-foreground)]">{preview.eventName}</span>
-        </PreviewModal>
+        </T.PreviewModal>
       )}
     </AdminChrome>
   );

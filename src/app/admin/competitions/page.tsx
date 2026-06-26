@@ -5,7 +5,6 @@ import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
 import { EventStatusBadge } from "@/components/atoms/status-badges";
 import { CompetitionFormModal } from "@/components/molecules/competition-form-modal";
-import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   COMPETITIONS,
   SPORTS,
@@ -84,7 +83,7 @@ export default function AdminCompetitionsPage() {
           action={<T.Button onClick={() => setCreating(true)}>Tambah Kompetisi</T.Button>}
         />
 
-        <FilterBar
+        <T.FilterBar
           search={{
             value: search,
             onChange: setSearch,

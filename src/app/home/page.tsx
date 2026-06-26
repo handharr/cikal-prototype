@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
 import { AccountStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
-import { SummaryRow } from "@/components/molecules/summary-row";
 import { ACCOUNT, MY_REGISTRATIONS, formatRupiah, formatDate } from "@/lib/data";
 
 export default function ParticipantHomePage() {
@@ -43,7 +42,7 @@ export default function ParticipantHomePage() {
           {hasRegistrations ? (
             <div className="flex flex-col gap-3">
               {MY_REGISTRATIONS.map((r) => (
-                <SummaryRow
+                <T.SummaryRow
                   key={r.id}
                   title={r.eventName}
                   meta={`${r.sport} · ${formatRupiah(r.feeRupiah)} · Tutup ${formatDate(r.closingDate)}`}

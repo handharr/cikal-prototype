@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   COMPETITIONS,
   STATUS_LABEL,
@@ -76,7 +75,7 @@ export default function CompetitionsPage() {
           description="Semua cabang dan nomor kompetisi beserta status, biaya, dan batas pendaftaran."
         />
 
-        <FilterBar
+        <T.FilterBar
           search={{
             value: search,
             onChange: resetTo(setSearch),

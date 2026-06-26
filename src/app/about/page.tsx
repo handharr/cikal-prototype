@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
-import { SectionIntro } from "@/components/molecules/section-intro";
 
 const HIGHLIGHTS = [
   {
@@ -27,7 +26,7 @@ export default function AboutPage() {
   return (
     <SiteChrome>
       <div className="flex flex-col gap-14">
-        <SectionIntro
+        <T.SectionIntro
           eyebrow="Tentang Kami"
           title="Sekolah Cikal Amri Setu"
           description="Sekolah Cikal Amri Setu secara rutin menyelenggarakan kompetisi olahraga untuk mendorong sportivitas dan prestasi siswa. Portal ini menyatukan pengumuman kompetisi dan pendaftaran peserta dalam satu tempat."
