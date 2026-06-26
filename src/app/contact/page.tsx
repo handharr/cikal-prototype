@@ -2,6 +2,7 @@
 
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
+import { SectionIntro } from "@/components/molecules/section-intro";
 
 const CONTACT = {
   address: "Jl. Setu Raya No. 1, Jakarta Timur",
@@ -24,15 +25,11 @@ export default function ContactPage() {
   return (
     <SiteChrome>
       <div className="flex flex-col gap-10">
-        {/* Intro */}
-        <section className="flex max-w-2xl flex-col gap-4">
-          <span className="typo-label text-[var(--primary)]">Kontak</span>
-          <h1 className="typo-section-title font-bold">Hubungi Panitia</h1>
-          <p className="typo-body text-[var(--muted-foreground)]">
-            Ada pertanyaan seputar kompetisi, pendaftaran, atau pembayaran? Tim kami siap membantu
-            pada jam operasional.
-          </p>
-        </section>
+        <SectionIntro
+          eyebrow="Kontak"
+          title="Hubungi Panitia"
+          description="Ada pertanyaan seputar kompetisi, pendaftaran, atau pembayaran? Tim kami siap membantu pada jam operasional."
+        />
 
         {/* Contact methods */}
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">

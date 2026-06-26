@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
+import { SectionIntro } from "@/components/molecules/section-intro";
 
 const HIGHLIGHTS = [
   {
@@ -26,16 +27,11 @@ export default function AboutPage() {
   return (
     <SiteChrome>
       <div className="flex flex-col gap-14">
-        {/* Intro */}
-        <section className="flex max-w-2xl flex-col gap-4">
-          <span className="typo-label text-[var(--primary)]">Tentang Kami</span>
-          <h1 className="typo-section-title font-bold">Sekolah Cikal Amri Setu</h1>
-          <p className="typo-body text-[var(--muted-foreground)]">
-            Sekolah Cikal Amri Setu secara rutin menyelenggarakan kompetisi olahraga untuk
-            mendorong sportivitas dan prestasi siswa. Portal ini menyatukan pengumuman kompetisi
-            dan pendaftaran peserta dalam satu tempat.
-          </p>
-        </section>
+        <SectionIntro
+          eyebrow="Tentang Kami"
+          title="Sekolah Cikal Amri Setu"
+          description="Sekolah Cikal Amri Setu secara rutin menyelenggarakan kompetisi olahraga untuk mendorong sportivitas dan prestasi siswa. Portal ini menyatukan pengumuman kompetisi dan pendaftaran peserta dalam satu tempat."
+        />
 
         {/* Highlights */}
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
