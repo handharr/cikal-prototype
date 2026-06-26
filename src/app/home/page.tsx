@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { AccountStatusBadge } from "@/components/atoms/status-badges";
-import { RegistrationRow } from "@/components/molecules/registration-row";
-import { ACCOUNT, MY_REGISTRATIONS } from "@/lib/data";
+import { AccountStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
+import { SummaryRow } from "@/components/molecules/summary-row";
+import { ACCOUNT, MY_REGISTRATIONS, formatRupiah, formatDate } from "@/lib/data";
 
 export default function ParticipantHomePage() {
   const T = useTierComponents();
@@ -43,10 +43,22 @@ export default function ParticipantHomePage() {
           {hasRegistrations ? (
             <div className="flex flex-col gap-3">
               {MY_REGISTRATIONS.map((r) => (
-                <RegistrationRow
+                <SummaryRow
                   key={r.id}
-                  registration={r}
-                  onPay={() => router.push(`/checkout?event=${r.eventId}`)}
+                  title={r.eventName}
+                  meta={`${r.sport} · ${formatRupiah(r.feeRupiah)} · Tutup ${formatDate(r.closingDate)}`}
+                  status={<PaymentStatusBadge status={r.paymentStatus} />}
+                  action={
+                    r.paymentStatus === "UNPAID" ? (
+                      <T.Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => router.push(`/checkout?event=${r.eventId}`)}
+                      >
+                        Bayar Sekarang
+                      </T.Button>
+                    ) : undefined
+                  }
                 />
               ))}
             </div>

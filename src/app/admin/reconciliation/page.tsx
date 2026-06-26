@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
 import { PaymentStatusBadge } from "@/components/atoms/status-badges";
-import { ProofPreviewModal } from "@/components/molecules/proof-preview-modal";
+import { PreviewModal } from "@/components/molecules/preview-modal";
+import { FilterBar } from "@/components/molecules/filter-bar";
 import {
   ALL_REGISTRATIONS,
   PAYMENT_LABEL,
@@ -96,23 +97,30 @@ export default function ReconciliationPage() {
           description="Tinjau pendaftaran, periksa bukti pembayaran, lalu verifikasi atau batalkan verifikasi."
         />
 
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-3">
-          <T.SearchBar
-            value={search}
-            onChange={setSearch}
-            placeholder="Cari nama peserta…"
-            className="w-full sm:w-64"
-          />
-          <T.FilterSelect value={sport} onChange={setSport} allLabel="Semua Cabang" options={SPORT_OPTIONS} />
-          <T.FilterSelect value={event} onChange={setEvent} allLabel="Semua Nomor" options={EVENT_OPTIONS} />
-          <T.FilterSelect
-            value={status}
-            onChange={(v) => setStatus(v as "" | PaymentStatus)}
-            allLabel="Semua Status"
-            options={STATUS_OPTIONS}
-          />
-        </div>
+        <FilterBar
+          search={{
+            value: search,
+            onChange: setSearch,
+            placeholder: "Cari nama peserta…",
+            className: "w-full sm:w-64",
+          }}
+          filters={[
+            { value: sport, onChange: setSport, allLabel: "Semua Cabang", options: SPORT_OPTIONS },
+            { value: event, onChange: setEvent, allLabel: "Semua Nomor", options: EVENT_OPTIONS },
+            {
+              value: status,
+              onChange: (v) => setStatus(v as "" | PaymentStatus),
+              allLabel: "Semua Status",
+              options: STATUS_OPTIONS,
+            },
+          ]}
+          onReset={() => {
+            setSearch("");
+            setSport("");
+            setEvent("");
+            setStatus("");
+          }}
+        />
 
         {/* Bulk actions */}
         <div className="flex flex-wrap items-center gap-3">
@@ -211,7 +219,17 @@ export default function ReconciliationPage() {
         </div>
       </div>
 
-      {preview && <ProofPreviewModal registration={preview} onClose={() => setPreview(null)} />}
+      {preview && (
+        <PreviewModal
+          title="Bukti Pembayaran"
+          caption="Pratinjau bukti transfer"
+          onClose={() => setPreview(null)}
+        >
+          <span className="font-medium">{preview.participantName}</span>
+          <span className="typo-card-title font-bold">{formatRupiah(preview.amountRupiah)}</span>
+          <span className="typo-label text-[var(--muted-foreground)]">{preview.eventName}</span>
+        </PreviewModal>
+      )}
     </AdminChrome>
   );
 }

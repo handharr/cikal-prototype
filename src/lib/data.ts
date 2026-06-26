@@ -266,6 +266,14 @@ export function formatRupiah(value: number): string {
   }).format(value);
 }
 
+export function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 export const STATUS_LABEL: Record<EventStatus, string> = {
   ACTIVE: "Aktif",
   NOT_STARTED: "Belum Dimulai",
