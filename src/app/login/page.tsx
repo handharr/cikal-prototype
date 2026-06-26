@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { SiteChrome } from "@/components/organisms/site-chrome";
@@ -7,6 +8,17 @@ import { SiteChrome } from "@/components/organisms/site-chrome";
 export default function LoginPage() {
   const T = useTierComponents();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Prototype shortcut (no real auth): admin / admin (case-insensitive) →
+  // admin backoffice; anything else → participant dashboard.
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const isAdmin =
+      email.trim().toLowerCase() === "admin" && password.toLowerCase() === "admin";
+    router.push(isAdmin ? "/admin" : "/home");
+  }
 
   return (
     <SiteChrome>
@@ -19,19 +31,25 @@ export default function LoginPage() {
             </T.CardDescription>
           </T.CardHeader>
 
-          {/* Prototype: no auth logic — visual only */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              router.push("/home");
-            }}
-          >
+          <form onSubmit={handleSubmit}>
             <T.CardContent className="flex flex-col gap-4">
               <T.Field label="Email" htmlFor="email" required>
-                <T.Input id="email" type="email" placeholder="nama@email.com" />
+                <T.Input
+                  id="email"
+                  type="text"
+                  placeholder="nama@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </T.Field>
               <T.Field label="Kata Sandi" htmlFor="password" required>
-                <T.Input id="password" type="password" placeholder="••••••••" />
+                <T.Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </T.Field>
               <a className="self-end typo-label text-[var(--primary)] hover:underline" href="#">
                 Lupa kata sandi?
