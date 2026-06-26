@@ -1,6 +1,6 @@
 {
   "name": "cikal-prototype",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Sekolah Cikal Amri Setu — Competition Showcase & Registration prototype (UI + routing only, tier-switchable Bronze/Silver/Gold)",
   "scripts": {
