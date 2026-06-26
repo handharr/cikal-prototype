@@ -43,10 +43,13 @@ npm run build        # static export → out/
 
 ### Local design-system source (`../forgekit`)
 
-`postinstall` runs `scripts/link-local-design-system.mjs`: if a sibling `../forgekit` checkout exists, it symlinks the four `@handharr-labs` packages into `node_modules` so the app builds against **local source** (incl. changes not yet published). On CI / hosting the sibling is absent, so the **registry** versions pinned in `package.json` are used — `package.json`/lockfile are never edited, so `npm ci` stays reproducible. `next.config.ts` points Turbopack's `root` at the workspace only when the sibling is present, so the out-of-tree symlink targets resolve.
+By default the app uses the **registry** `@handharr-labs` packages pinned in `package.json` — dev and CI both. This is the fast path: a normal, app-only Turbopack watch scope.
 
-- Re-sync after editing forgekit: `npm run link:local` (symlinks are live, but a fresh `npm install` re-creates them).
-- Force the registry locally: `USE_LOCAL_FORGEKIT=0 npm ci`.
+To preview **unpublished** forgekit changes, run `npm run link:local`: it copies the four packages from a sibling `../forgekit` checkout over the registry copies in `node_modules`. Copies are in-tree, so Turbopack resolves them with no `turbopack.root` override (pointing root at the workspace would drag ~20 sibling repos into the watch scope and make reloads crawl).
+
+- Copies are a snapshot — re-run `npm run link:local` after each forgekit edit.
+- Restore the registry: `npm ci`.
+- Prefer publishing forgekit and bumping the dep here once changes are stable; linking is only for pre-publish preview.
 
 ## Deployment
 

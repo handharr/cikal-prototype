@@ -1,19 +1,18 @@
-// Dev-only design-system linking.
+// Opt-in: preview unpublished design-system changes from a sibling ../forgekit
+// checkout, without publishing.
 //
-// If a sibling `../forgekit` checkout exists, symlink its design-system packages
-// into node_modules so the app builds against local source (including changes
-// not yet published to GitHub Packages). On hosting / CI the sibling checkout
-// is absent, so the registry versions pinned in package.json are used unchanged.
+// Run `npm run link:local` to COPY the local @handharr-labs source over the
+// registry packages in node_modules. Copies are in-tree, so Turbopack resolves
+// them normally (no workspace-wide `turbopack.root`, which would drag ~20 sibling
+// repos into the watch scope and make dev reloads crawl). Trade-off: copies are a
+// snapshot — re-run this after editing forgekit. Revert to the registry with
+// `npm ci`.
 //
-// This runs as `postinstall`, so the right source is selected automatically:
-//   • local machine with ../forgekit present  → local source
-//   • GitHub Actions / any clone without it    → registry (npm ci stays reproducible)
-//
-// It never edits package.json or package-lock.json — it only swaps directories
-// inside node_modules. To force the registry locally: `USE_LOCAL_FORGEKIT=0 npm ci`.
+// Not a postinstall hook: by default dev/CI use the pinned registry versions, so
+// installs stay fast and reproducible.
 
-import { existsSync, lstatSync, rmSync, symlinkSync, mkdirSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { existsSync, lstatSync, rmSync, cpSync, mkdirSync } from "node:fs";
+import { resolve, dirname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -22,13 +21,9 @@ const forgekitPkgs = resolve(appRoot, "../forgekit/packages");
 
 const PACKAGES = ["ui-base-bronze", "ui-base-silver", "ui-base-gold", "ui-tier-runtime"];
 
-if (process.env.USE_LOCAL_FORGEKIT === "0") {
-  console.log("[forgekit] USE_LOCAL_FORGEKIT=0 → using registry packages.");
-  process.exit(0);
-}
 if (!existsSync(forgekitPkgs)) {
-  // No sibling forgekit checkout (CI / hosting) → keep the registry packages.
-  process.exit(0);
+  console.error(`[forgekit] no sibling checkout at ${forgekitPkgs} — nothing to link.`);
+  process.exit(1);
 }
 
 const scope = resolve(appRoot, "node_modules/@handharr-labs");
@@ -43,20 +38,21 @@ const exists = (p) => {
   }
 };
 
-let linked = 0;
+let copied = 0;
 for (const name of PACKAGES) {
   const target = resolve(forgekitPkgs, name);
-  if (!existsSync(target)) continue; // package not present locally → leave registry copy
-  const link = resolve(scope, name);
-  if (exists(link)) rmSync(link, { recursive: true, force: true }); // drop registry copy / stale link
-  symlinkSync(target, link, "dir");
-  linked++;
-  console.log(`[forgekit] linked @handharr-labs/${name} → ${target}`);
+  if (!existsSync(target)) continue;
+  const dest = resolve(scope, name);
+  if (exists(dest)) rmSync(dest, { recursive: true, force: true }); // drop registry copy
+  // Copy source only — skip the package's own node_modules / VCS metadata.
+  cpSync(target, dest, {
+    recursive: true,
+    filter: (src) => !src.includes(`${sep}node_modules${sep}`) && !src.endsWith(`${sep}.git`),
+  });
+  copied++;
+  console.log(`[forgekit] copied @handharr-labs/${name} ← ${target}`);
 }
 
-if (linked > 0) {
-  console.log(
-    `[forgekit] ${linked} package(s) linked from local forgekit. ` +
-      "Set USE_LOCAL_FORGEKIT=0 and reinstall to use the registry.",
-  );
+if (copied > 0) {
+  console.log(`[forgekit] ${copied} package(s) copied from local forgekit. Run \`npm ci\` to restore the registry.`);
 }

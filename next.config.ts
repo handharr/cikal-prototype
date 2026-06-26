@@ -1,18 +1,8 @@
 import type { NextConfig } from "next";
-import path from "node:path";
-import { existsSync } from "node:fs";
 
 // Set by CI (actions/configure-pages → base_path) for project Pages, e.g.
 // "/cikal-prototype". Empty for local dev / custom domain.
 const basePath = process.env.NEXT_BASE_PATH || "";
-
-// When a sibling ../forgekit checkout exists, postinstall symlinks its design-
-// system packages into node_modules (see scripts/link-local-design-system.mjs).
-// Those resolve to real paths outside this app dir, so Turbopack's root must be
-// the shared workspace for them to resolve. Absent (CI / hosting) → registry.
-const workspaceRoot = path.resolve(process.cwd(), "..");
-const useLocalForgekit =
-  process.env.USE_LOCAL_FORGEKIT !== "0" && existsSync(path.join(workspaceRoot, "forgekit/packages"));
 
 const nextConfig: NextConfig = {
   // Static HTML export for GitHub Pages.
@@ -32,8 +22,6 @@ const nextConfig: NextConfig = {
     "@handharr-labs/ui-base-gold",
     "@handharr-labs/ui-tier-runtime",
   ],
-
-  ...(useLocalForgekit ? { turbopack: { root: workspaceRoot } } : {}),
 };
 
 export default nextConfig;

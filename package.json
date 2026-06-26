@@ -9,7 +9,6 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "postinstall": "node scripts/link-local-design-system.mjs",
     "link:local": "node scripts/link-local-design-system.mjs"
   },
   "dependencies": {
