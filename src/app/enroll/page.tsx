@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { EventStatusBadge } from "@/components/atoms/status-badges";
+import { EventStatusBadge } from "@/views/status-badges";
 import { COMPETITIONS, ACCOUNT, formatRupiah } from "@/lib/data";
 
 function EnrollInner() {

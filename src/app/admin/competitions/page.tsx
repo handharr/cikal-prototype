@@ -3,8 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { EventStatusBadge } from "@/components/atoms/status-badges";
-import { CompetitionFormModal } from "@/components/molecules/competition-form-modal";
+import { EventStatusBadge } from "@/views/status-badges";
+import { CompetitionFormModal } from "@/views/competition-form-modal";
 import {
   COMPETITIONS,
   SPORTS,

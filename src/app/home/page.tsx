@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AppChrome } from "@/components/organisms/app-chrome";
-import { AccountStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
+import { AccountStatusBadge, PaymentStatusBadge } from "@/views/status-badges";
 import { ACCOUNT, MY_REGISTRATIONS, formatRupiah, formatDate } from "@/lib/data";
 
 export default function ParticipantHomePage() {

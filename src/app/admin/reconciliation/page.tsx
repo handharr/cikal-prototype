@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { PaymentStatusBadge } from "@/components/atoms/status-badges";
+import { PaymentStatusBadge } from "@/views/status-badges";
 import {
   ALL_REGISTRATIONS,
   PAYMENT_LABEL,

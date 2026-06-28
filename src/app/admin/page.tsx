@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTierComponents } from "@handharr-labs/ui-tier-runtime";
 import { AdminChrome } from "@/components/organisms/admin-chrome";
-import { EventStatusBadge, PaymentStatusBadge } from "@/components/atoms/status-badges";
+import { EventStatusBadge, PaymentStatusBadge } from "@/views/status-badges";
 import { SPORTS, COMPETITIONS, ALL_REGISTRATIONS, formatRupiah } from "@/lib/data";
 
 const PREVIEW_COUNT = 5;
