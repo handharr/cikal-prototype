@@ -23,9 +23,19 @@ Consumes published packages from the `@handharr-labs` GitHub Packages registry:
 - `src/components/app-frame.tsx` applies the active `tier-{name} brand-cikal` scope and floats the `TierSwitcher`.
 - CIKAL brand tokens live in `src/styles/brand-cikal.css` (copied; the source `ui-cikal-showcase` is private). Post-deal these graduate into a real `@handharr-labs/ui-cikal` brand package.
 
+## Components vs Views
+
+Local UI is split by **domain-awareness**, mirroring the Forge Kit web-architecture rule:
+
+- `src/components/` — **pure** UI (atoms / molecules / organisms). Tier primitives + props + callbacks only. **Never imports `@/lib/data`.**
+- `src/views/` — **domain-aware** UI. Anything that imports a `@/lib/data` type/label (e.g. `EventStatus`, `CompetitionEvent`, `STATUS_LABEL`) lives here — regardless of size. A domain-aware "atom" is a View, not a component (`status-badges.tsx`, `competition-form-modal.tsx`).
+
+The bright line: the moment a file imports from `@/lib/data`, it belongs in `src/views/`.
+
 ## Key Rules
 
 - **No domain/business logic, no data fetching, no validation** — visual prototype only. Mock content lives in `src/lib/data.ts`.
+- Domain-aware UI goes in `src/views/`; keep `src/components/` pure (see *Components vs Views*).
 - Render UI through `useTierComponents()` — do not hardcode to one tier.
 - The packages ship **raw TypeScript**: any new design-system package must be added to both `transpilePackages` (`next.config.ts`) and `@source` (`src/app/globals.css`).
 - Tier tokens are scoped to `.tier-{name}`, brand tokens to `.brand-cikal` — never `:root`. Import order in `layout.tsx` keeps brand last so its knobs win.
